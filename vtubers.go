@@ -12,18 +12,18 @@ import (
 )
 
 type Company struct {
-	Id 		int		`csv:"Id"`
+	Id		int		`csv:"Id"`
 	Name	string	`csv:"Name"`
 }
 
 type Generation struct {
-	Id 			int		`csv:"Id"`
+	Id			int		`csv:"Id"`
 	Name		string	`csv:"Name"`
 	CompanyId	int		`csv:"CompanyId"`
 }
 
 type VTuber struct {
-	Id 				int		`csv:"Id"`
+	Id				int		`csv:"Id"`
 	Name			string	`csv:"Name"`
 	CompanyId		int		`csv:"CompanyId"`
 	GenerationId	int		`csv:"GenerationId"`
