@@ -21,6 +21,7 @@ func main() {
 	router.HandleFunc("/generation/add", GenerationAddHandler)
 	router.HandleFunc("/generation/{id}", GenerationIdHandler)
 	router.HandleFunc("/vtuber", VTuberHandler)
+	router.HandleFunc("/vtuber/add", VTuberAddHandler)
 	router.HandleFunc("/vtuber/{id}", VTuberIdHandler)
 
 	srv := &http.Server{

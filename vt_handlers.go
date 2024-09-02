@@ -171,12 +171,76 @@ func GenerationIdHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func VTuberHandler(w http.ResponseWriter, r *http.Request) {
-	var template string = "<h1>VTubers</h1>%s"
+	var template string = "<h1>VTubers</h1>%s<p><hr><a href=\"/vtuber/add\">Add VTuber</a></p>"
 	var vtuberList string = ""
 	for _, v := range vtubers {
 		vtuberList = fmt.Sprintf("%s<p><a href=\"/vtuber/%d\">%s</a></p>", vtuberList, v.Id, v.Name)
 	}
 	DisplayPage(w, MakeHtml(fmt.Sprintf(template, vtuberList)))
+}
+
+func VTuberAddHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodPost {
+		err := r.ParseForm()
+		if err != nil {
+			http.Error(w, "Failed to parse form data", http.StatusBadRequest)
+			return
+		}
+
+		// Retrieve form data
+		vtuberName := r.Form.Get("vtuber_name")
+		companyId, err := strconv.Atoi(r.Form.Get("company_id"))
+
+		if err != nil {
+			http.Error(w, "Failed to parse company id", http.StatusBadRequest)
+			return
+		}
+
+		generationId, err := strconv.Atoi(r.Form.Get("generation_id"))
+		if err != nil {
+			http.Error(w, "Failed to parse generation id", http.StatusBadRequest)
+			return
+		}
+
+		// Validate form data: vtuber name is required.
+		if len(vtuberName) == 0 {
+			http.Error(w, "VTuber name is required", http.StatusBadRequest)
+			return
+		}
+
+		// This is a small app. I can take shortcuts.
+		vtuberId := GetVTuberMaxId() + 1
+
+		// Add the new vtuber to the list
+		vtubers = append(vtubers, &VTuber{
+			Id: vtuberId, 
+			Name: vtuberName, 
+			CompanyId: companyId,
+			GenerationId: generationId})
+
+		// Save the data
+		SaveData()
+
+		http.Redirect(w, r, "/vtuber", http.StatusSeeOther)
+	} else {
+		var companyOptions string = fmt.Sprintf("<select id=\"company_id\" name=\"company_id\">%s</select>", MakeCompanyOptions())
+		var generationOptions string = fmt.Sprintf("<select id=\"generation_id\" name=\"generation_id\">%s</select>", MakeGenerationOptions())
+		var form string = `<h1>Add VTuber</h1>
+		<form method="post">
+		<label for="vtuber_name">Name:</label>
+		<input type="text" id="vtuber_name" name="vtuber_name">
+		<br><br>
+		<label for="generation_id">Generation:</label>
+		%s
+		<br><br>
+		<label for="company_id">Company:</label>
+		%s
+		<br><br>
+		<input type="submit" value="Add">
+		</form>`
+		
+		DisplayPage(w, MakeHtml(fmt.Sprintf(form, generationOptions, companyOptions)))
+	}
 }
 
 func VTuberIdHandler(w http.ResponseWriter, r *http.Request) {
