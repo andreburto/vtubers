@@ -38,4 +38,8 @@ Windows:
 
 ## Update Log
 
+**2024-09-01:** Broke up files to make editing them easier, but can go further.
+Added basic logic to update the files and add records. (Primo 90's webdev!)
+Moved CSV files into `data` directory. 
+
 **2024-04-13:** Initial commit. Server works with a small sample of information.
