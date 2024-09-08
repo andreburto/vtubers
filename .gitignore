@@ -1,2 +1,6 @@
+# Secrets
+.env
+
+# Extentions
 *.exe
 *.sum

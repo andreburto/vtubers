@@ -15,6 +15,7 @@ func main() {
 	router.HandleFunc("/company", CompanyHandler)
 	router.HandleFunc("/company/add", CompanyAddHandler)
 	router.HandleFunc("/company/{id}", CompanyIdHandler)
+	// router.HandleFunc("/company/{id}/edit", CompanyIdEditHandler)
 	router.HandleFunc("/company/{id}/vtuber", CompanyIdVTuberHandler)
 	router.HandleFunc("/company/{id}/generation", CompanyIdGenerationHandler)
 	router.HandleFunc("/generation", GenerationHandler)

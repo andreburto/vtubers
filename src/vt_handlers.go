@@ -74,6 +74,40 @@ func CompanyIdHandler(w http.ResponseWriter, r *http.Request) {
 	DisplayPage(w, MakeHtml(fmt.Sprintf(companyPage, companyName, companyId, companyId)))
 }
 
+// func CompanyIdEditHandler(w http.ResponseWriter, r *http.Request) {
+// 	vars := mux.Vars(r)
+// 	companyName, _ := GetCompany(vars["id"])
+// 	if r.Method == http.MethodPost {
+// 		err := r.ParseForm()
+// 		if err != nil {
+// 			http.Error(w, "Failed to parse form data", http.StatusBadRequest)
+// 			return
+// 		}
+
+// 		// Retrieve form data
+// 		newCompanyName := r.Form.Get("company_name")
+
+// 		// Validate form data: company name is required.
+// 		if len(newCompanyName) == 0 {
+// 			http.Error(w, "Company name is required", http.StatusBadRequest)
+// 			return
+// 		}
+
+// 		// Update the company name
+// 		UpdateCompany(vars["id"], newCompanyName)
+
+// 		// Save the data
+// 		SaveData()
+
+// 		http.Redirect(w, r, "/company", http.StatusSeeOther)
+// 	} else {
+// 		var form string = `<h1>Edit Company</h1>
+// <form method="post">`
+// 	}
+
+
+// }
+
 func CompanyIdVTuberHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	companyName, _ := GetCompany(vars["id"])
