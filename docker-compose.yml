@@ -9,8 +9,7 @@ services:
     # depends_on:
     #   - mongodb
     env_file:
-      - path: .env
-        required: true
+      - .env
     volumes:
       - ./data:/app/data
   # mongodb:
