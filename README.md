@@ -28,6 +28,14 @@ Windows:
 .\vtubers.exe
 ```
 
+# Queries
+
+Connect to MongoDB `vtubers` database and try out this query:
+
+```
+db.getCollection("vtubers").find({"Name": { $in: ["Jelly Hoshiumi", "Kaneko Lumi"]}})
+```
+
 ## To Do
 
 * Create tests.
@@ -37,6 +45,8 @@ Windows:
 * Better error handling.
 
 ## Update Log
+
+**2024-12-15:** Crude loader works with exiting files. Now I can start converting everything over to MongoDB from CSV files.
 
 **2024-09-01:** Broke up files to make editing them easier, but can go further.
 Added basic logic to update the files and add records. (Primo 90's webdev!)

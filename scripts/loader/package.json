@@ -7,7 +7,6 @@
     },
     "dependencies": {
         "csv-parse": "5.6.0",
-        "lodash": "latest",
         "mongodb": "latest"
     }
 }

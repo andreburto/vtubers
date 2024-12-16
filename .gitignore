@@ -4,3 +4,6 @@
 # Extentions
 *.exe
 *.sum
+
+# Directories
+node_modules
