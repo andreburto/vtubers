@@ -1,0 +1,14 @@
+{
+    "name": "vtuber-scripts",
+    "version": "0.0.1",
+    "description": "vtuber scriipts",
+    "scripts": {
+        "dump": "node dumper.js",
+        "load": "node loader.js"
+    },
+    "dependencies": {
+        "csv-parse": "5.6.0",
+        "lodash": "latest",
+        "mongodb": "latest"
+    }
+}
