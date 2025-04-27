@@ -16,4 +16,4 @@ WORKDIR /app
 
 COPY --from=build /app/vtubers /app/vtubers
 
-CMD ["/app/vtubers"]
+ENTRYPOINT ["/app/vtubers"]

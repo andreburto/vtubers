@@ -12,6 +12,7 @@ func main() {
 
 	router := mux.NewRouter()
 	router.HandleFunc("/", GetRoot)
+	router.HandleFunc("/test", TestMongo)
 	router.HandleFunc("/company", CompanyHandler)
 	router.HandleFunc("/company/add", CompanyAddHandler)
 	router.HandleFunc("/company/{id}", CompanyIdHandler)
