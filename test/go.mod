@@ -1,4 +1,4 @@
-module github.com/andreburto/vtubers
+module main
 
 go 1.21.8
 
