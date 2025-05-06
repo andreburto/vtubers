@@ -6,13 +6,16 @@ import (
 	"strconv"
 
 	"github.com/gorilla/mux"
+	
 )
 
 func GetRoot(w http.ResponseWriter, r *http.Request) {
 	var html string = `<h1>VTubers</h1>
 <p><a href="/company">Companies</a></p>
 <p><a href="/generation">Generations</a></p>
-<p><a href="/vtuber">VTubers</a></p>`
+<p><a href="/vtuber">VTubers</a></p>
+<hr>
+<p><a href="/v2/">V2 Home</a></p>`
 	DisplayPage(w, MakeHtml(html))
 }
 

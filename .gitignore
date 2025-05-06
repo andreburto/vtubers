@@ -7,3 +7,5 @@
 
 # Directories
 node_modules
+mongodb_data
+data

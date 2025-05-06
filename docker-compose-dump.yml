@@ -1,14 +1,12 @@
 version: '3.8'
 services:
-  setup:
+  dump:
     build:
       context: .
       dockerfile: Dockerfile.nodejs
     depends_on:
       - mongodb
-    volumes:
-      - ./data:/data
-    entrypoint: npm run load
+    entrypoint: npm run dump
     env_file: .env
   mongodb:
     image: mongo:latest

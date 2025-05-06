@@ -1,14 +1,12 @@
 version: '3.8'
 services:
-  setup:
+  test:
     build:
       context: .
-      dockerfile: Dockerfile.nodejs
+      dockerfile: Dockerfile_test.go
     depends_on:
       - mongodb
-    volumes:
-      - ./data:/data
-    entrypoint: npm run load
+    entrypoint: /app/vtubers
     env_file: .env
   mongodb:
     image: mongo:latest
