@@ -47,17 +47,32 @@ function fileToMap(file) {
 async function run() {
   try {
     const database = client.db(dbName);
-    const collection = database.collection(collectionName);
-
-    vtuberFile = `${dataDir}/vtuber.csv`;
-    vtuberData = loadCSV(vtuberFile)
-    vtuber = fileToMap(vtuberFile);
 
     generationFile = `${dataDir}/generation.csv`;
-    generation = fileToMap(generationFile)
+    generationData = loadCSV(generationFile);
+    generation = fileToMap(generationFile);
+
+    const generationRecords = generationData.map(record => {
+      return {
+        "Id": record["Id"],
+        "Name": record["Name"],
+      }
+    });
 
     companyFile = `${dataDir}/company.csv`;
+    companyData = loadCSV(companyFile);
     company = fileToMap(companyFile);
+
+    const companyRecords = companyData.map(record => {
+      return {
+        "Id": record["Id"],
+        "Name": record["Name"],
+      }
+    });
+
+    vtuberFile = `${dataDir}/vtuber.csv`;
+    vtuberData = loadCSV(vtuberFile);
+    vtuber = fileToMap(vtuberFile);
 
     const newRecords = vtuberData.map(record => {
       return {
@@ -68,12 +83,24 @@ async function run() {
       }
     })
 
-    // Clear out the collection.
-    const clearResult = await collection.deleteMany({});
+    // Clear out and insert generation records
+    const generationCollection = database.collection("generations");
+    const generationClearResult = await generationCollection.deleteMany({});
+    const generationResult = await generationCollection.insertMany(generationRecords);
 
+    // Clear out and insert company records
+    const companyCollection = database.collection("companies");
+    const companyClearResult = await companyCollection.deleteMany({});
+    const companyResult = await companyCollection.insertMany(companyRecords);
+
+    // Clear out the collection and insert the new records
+    const collection = database.collection(collectionName);
+    const clearResult = await collection.deleteMany({});
     const result = await collection.insertMany(newRecords);
     
     // Print the ID of the inserted document
+    console.log(`A document was inserted with the _id: ${generationResult}`);
+    console.log(`A document was inserted with the _id: ${companyResult}`);
     console.log(`A document was inserted with the _id: ${result}`);
   } finally {
     // Close the MongoDB client connection

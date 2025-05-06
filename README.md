@@ -46,6 +46,10 @@ db.getCollection("vtubers").find({"Name": { $in: ["Jelly Hoshiumi", "Kaneko Lumi
 
 ## Update Log
 
+**2025-05-05:** Updated loader to add `companies` and `generations` collections.
+Added the first MongoDB handler.
+A way to go.
+
 **2024-12-15:** Crude loader works with exiting files. Now I can start converting everything over to MongoDB from CSV files.
 
 **2024-09-01:** Broke up files to make editing them easier, but can go further.
