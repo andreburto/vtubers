@@ -11,11 +11,9 @@ func main() {
 	LoadData()
 
 	router := mux.NewRouter()
+	// v1, csv version
 	router.HandleFunc("/", GetRoot)
-	router.HandleFunc("/v2/", GetRoot2)
-	router.HandleFunc("/test", TestMongo)
 	router.HandleFunc("/company", CompanyHandler)
-	router.HandleFunc("/v2/company", CompanyMongoHandler)
 	router.HandleFunc("/company/add", CompanyAddHandler)
 	router.HandleFunc("/company/{id}", CompanyIdHandler)
 	// router.HandleFunc("/company/{id}/edit", CompanyIdEditHandler)
@@ -27,6 +25,10 @@ func main() {
 	router.HandleFunc("/vtuber", VTuberHandler)
 	router.HandleFunc("/vtuber/add", VTuberAddHandler)
 	router.HandleFunc("/vtuber/{id}", VTuberIdHandler)
+	// v2, mongo version
+	router.HandleFunc("/test", TestMongo)
+	router.HandleFunc("/v2/", GetRoot2)
+	router.HandleFunc("/v2/company", CompanyMongoHandler)
 
 	srv := &http.Server{
 		Handler: router,

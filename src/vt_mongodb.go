@@ -26,19 +26,29 @@ type Company2 struct {
 	Name string
 }
 
-func CompanyMongoHandler(w http.ResponseWriter, r *http.Request) {
-	
+func CreateMongoDBClient() (*mongo.Client) {
 	clientOptions := options.Client().ApplyURI(os.Getenv("MONGO_URI"))
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 	if err != nil {
 		log.Fatal(err)
+		panic(err)
 	}
+	return client
+}
 
-	defer func() {
-		if err = client.Disconnect(context.TODO()); err != nil {
-			panic(err)
-		}
-	}()
+func DisconnectMongoDBClient(client *mongo.Client) {
+	err := client.Disconnect(context.TODO())
+	if err != nil {
+		log.Fatal(err)
+		panic(err)
+	}
+}
+
+func CompanyMongoHandler(w http.ResponseWriter, r *http.Request) {
+	
+	client := CreateMongoDBClient()
+
+	defer DisconnectMongoDBClient(client)
 
 	collection := client.Database("vtubers").Collection("companies")
 	filter := bson.D{}
@@ -47,6 +57,7 @@ func CompanyMongoHandler(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		log.Fatal(err)
+		panic(err)
 	}
 
 	var companyList string = ""
@@ -77,23 +88,14 @@ func GetRoot2(w http.ResponseWriter, r *http.Request) {
 }
 
 func TestMongo(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(os.Getenv("MONGO_URI"))
-	clientOptions := options.Client().ApplyURI(os.Getenv("MONGO_URI"))
-	client, err := mongo.Connect(context.TODO(), clientOptions)
-	if err != nil {
-		log.Fatal(err)
-	}
+	client := CreateMongoDBClient()
 
-	defer func() {
-		if err = client.Disconnect(context.TODO()); err != nil {
-			panic(err)
-		}
-	}()
+	defer DisconnectMongoDBClient(client)
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	err = client.Ping(ctx, nil)
+	err := client.Ping(ctx, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
