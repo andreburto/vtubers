@@ -26,9 +26,11 @@ func main() {
 	router.HandleFunc("/vtuber/add", VTuberAddHandler)
 	router.HandleFunc("/vtuber/{id}", VTuberIdHandler)
 	// v2, mongo version
-	router.HandleFunc("/test", TestMongo)
 	router.HandleFunc("/v2/", GetRoot2)
 	router.HandleFunc("/v2/company", CompanyMongoHandler)
+	router.HandleFunc("/v2/company/{id}", CompanyIdMongoHandler)
+	router.HandleFunc("/v2/generation", GenerationMongoHandler)
+	router.HandleFunc("/v2/vtuber", VTuberMongoHandler)
 
 	srv := &http.Server{
 		Handler: router,
